@@ -67,3 +67,22 @@ class Library {
             console.log(book.getDetails()); //Runs and logs getDetails() forEach book
         });
     };
+
+    //Task 4 - Implemented Book Borrowing
+    lendBook(borrowerId, isbn) { //Add method lendBook()
+        let book = this.books.find((bk) => bk.isbn === isbn); //Finding book by isbn using .find()
+        let borrower = this.borrowers.find((br) => br.borrowerId === borrowerId); //Finding borrower by borrowerId using .find()
+        if (!book) { //If book wasn't found
+            console.log(`No book found with ISBN: ${isbn}!`); //Alerting the user
+            return;
+        } if (!borrower) { //If borrower wasn't found
+            console.log(`No borrower found with borrowerId: ${borrowerId}!`); //Alerting the user
+            return;
+        } if (book.copies > 0) { //Checking to ensure adequate stock
+            book.updateCopies(-1); //Subracting using updateCopies()
+            borrower.borrowBook(book); //Borrowing book using borrowBook 
+            console.log("Book borrowed successfully."); //Alerting the user
+        } else { //If no copies are in stock
+            console.log(`No copies of ${book.title} in stock!`) //Alerting the user
+        };
+    };
